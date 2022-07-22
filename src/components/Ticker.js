@@ -4,6 +4,18 @@ import { makeRandomNumber } from "../utils";
 function Ticker() {
   const [price, setPrice] = useState(0);
   const [color, setColor] = useState("black");
+  const prevPriceRef = useRef(price);
+
+  useEffect(() => {
+    const prevPrice = prevPriceRef.current;
+    if (price > prevPrice) {
+      setColor("green");
+    } else if (price < prevPrice) {
+      setColor("red");
+    } else {
+      setColor("black");
+    }
+  }, [price]);
 
   useEffect(() => {
     const id = setInterval(() => setPrice(makeRandomNumber), 1000);
